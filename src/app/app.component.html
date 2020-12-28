@@ -1,26 +1,56 @@
-<div class="title">
-  <h1>
-    Welcome to
-    <a class="api-url" href="https://developers.arcgis.com/javascript/">
-      ArcGIS API for JavaScript
-    </a>
-    using
-    <a href="https://github.com/Esri/esri-loader" target="_blank">
-      esri-loader
-    </a>
-    with . . .
-  </h1>
-  <img
-    width="200"
-    alt="Angular Logo"
-    src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg=="
-  />
-</div>
+<div style="height: 100vh;">
+  <mat-toolbar color="primary">
+    <mat-toolbar-row>
+      <button mat-icon-button (click)="sidenav.toggle()" fxShow="true" fxHide.gt-sm>
+        <mat-icon>menu</mat-icon>
+      </button>
+      <span>Berzele depun oua viiiii</span>
+      <span class="example-spacer"></span>
+      <div fxShow="true" fxHide.lt-md="true">
+        <a href="#" mat-button>
+          <mat-icon>list</mat-icon>
+          Map Type
+        </a>
+        <a href="#" mat-button>
+          <mat-icon>filter_list</mat-icon>
+          Filters
+        </a>
+        <a href="#" mat-button>
+          <mat-icon>account_box</mat-icon>
+          My Account
+        </a>
+      </div>
+    </mat-toolbar-row>
+  </mat-toolbar>
 
-<app-map
-  [center]="mapCenter"
-  [basemap]="basemapType"
-  [zoom]="mapZoomLevel"
-  (mapLoadedEvent)="mapLoadedEvent($event)"
->
-</app-map>
+  <mat-sidenav-container fxFlexFill>
+    <mat-sidenav #sidenav>
+      <mat-nav-list>
+        <a href="#" mat-list-item>
+          <mat-icon>list</mat-icon>
+          Map Type
+        </a>
+        <a href="#" mat-list-item>
+          <mat-icon>filter_list</mat-icon>
+          Filters
+        </a>
+        <a href="#" mat-list-item>
+          <mat-icon>account_box</mat-icon>
+          My Account
+        </a>
+        <a (click)="sidenav.toggle()" mat-list-item>
+          <mat-icon>close</mat-icon> Close
+        </a>
+      </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content fxFlexFill>
+      <app-map
+        [center]="mapCenter"
+        [basemap]="basemapType"
+        [zoom]="mapZoomLevel"
+      >
+      </app-map>
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

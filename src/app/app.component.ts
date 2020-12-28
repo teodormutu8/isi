@@ -8,12 +8,7 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'isi'
   // Set our map properties
-  mapCenter = [-122.4194, 37.7749];
-  basemapType = 'satellite';
-  mapZoomLevel = 12;
-
-  // See app.component.html
-  mapLoadedEvent(status: boolean) {
-    console.log('The map loaded: ' + status);
-  }
+  mapCenter = [23.727539, 37.983810];
+  basemapType = 'streets-navigation-vector';
+  mapZoomLevel = 13;
 }
