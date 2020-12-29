@@ -8,16 +8,16 @@
         <span class="example-spacer"></span>
         <div fxShow="true" fxHide.lt-md="true">
             <a href="#" mat-button>
-            <mat-icon>list</mat-icon>
-            Map Type
+                <mat-icon>list</mat-icon>
+                Map Type
             </a>
             <a href="#" mat-button>
-            <mat-icon>filter_list</mat-icon>
-            Filters
+                <mat-icon>filter_list</mat-icon>
+                Filters
             </a>
             <a (click)="auth.logout()" mat-button>
-            <mat-icon>account_box</mat-icon>
-            Log out
+                <mat-icon>exit_to_app</mat-icon>
+                Log out
             </a>
         </div>
         </mat-toolbar-row>
@@ -27,19 +27,20 @@
         <mat-sidenav #sidenav>
         <mat-nav-list>
             <a href="#" mat-list-item>
-            <mat-icon>list</mat-icon>
-            Map Type
+                <mat-icon>list</mat-icon>
+                Map Type
             </a>
             <a href="#" mat-list-item>
-            <mat-icon>filter_list</mat-icon>
-            Filters
+                <mat-icon>filter_list</mat-icon>
+                Filters
             </a>
-            <a href="#" mat-list-item>
-            <mat-icon>account_box</mat-icon>
-            My Account
+            <a (click)="auth.logout()" mat-list-item>
+                <mat-icon>exit_to_app</mat-icon>
+                Log out
             </a>
             <a (click)="sidenav.toggle()" mat-list-item>
-            <mat-icon>close</mat-icon> Close
+                <mat-icon>close</mat-icon> 
+                Close
             </a>
         </mat-nav-list>
         </mat-sidenav>

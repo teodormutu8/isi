@@ -1,0 +1,14 @@
+.wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: 100vh;
+    box-shadow: 2px 2px 5px rgba(161, 45, 161, 0.5);
+
+}
+
+.button:hover {
+    background-color: #3347b8; /* Green */
+    color: white;
+  }
