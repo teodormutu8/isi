@@ -6,7 +6,8 @@ import {
   Input,
   Output,
   EventEmitter,
-  OnDestroy
+  OnDestroy,
+  OnChanges
 } from "@angular/core";
 
 import { loadModules } from "esri-loader";
@@ -17,9 +18,7 @@ import esri = __esri; // Esri TypeScript Types
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.css']
 })
-export class MapComponent implements OnInit {
-
-  @Output() mapLoadedEvent = new EventEmitter<boolean>();
+export class MapComponent implements OnInit, OnChanges {
 
   // The <div> where we will place the map
   @ViewChild("mapViewNode", { static: true }) private mapViewEl: ElementRef;
@@ -32,7 +31,7 @@ export class MapComponent implements OnInit {
    */
   private _zoom = 10;
   private _center: Array<number> = [0.1278, 51.5074];
-  private _basemap = "streets";
+  private _basemap = "imagery";
   private _loaded = false;
   private _view: esri.MapView = null;
 
@@ -102,12 +101,11 @@ export class MapComponent implements OnInit {
 
   ngOnInit() {
     // Initialize MapView and return an instance of MapView
-    this.initializeMap().then(() => {
-      // The map has been initialized
-      console.log("mapView ready: ", this._view.ready);
-      this._loaded = this._view.ready;
-      this.mapLoadedEvent.emit(true);
-    });
+    this.initializeMap().then(() => {});
+  }
+
+  ngOnChanges() {
+    this.initializeMap().then();
   }
 
   ngOnDestroy() {

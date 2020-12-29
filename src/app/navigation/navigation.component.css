@@ -5,3 +5,12 @@
 .example-spacer {
     flex: 1 1 auto;
 }
+
+.map-container {
+    text-align: center;
+}
+
+img {
+    width: 25%;
+    height: auto;
+}

@@ -7,10 +7,16 @@
         <span>Berzele depun oua viiiii</span>
         <span class="example-spacer"></span>
         <div fxShow="true" fxHide.lt-md="true">
-            <a href="#" mat-button>
+            <a mat-button [matMenuTriggerFor]="maps">
                 <mat-icon>list</mat-icon>
                 Map Type
             </a>
+            <mat-menu #maps="matMenu">
+                <button *ngFor="let baseMap of baseMapTypes" mat-menu-item (click)="changeBaseMapType(baseMap.name)">
+                    <img src="{{baseMap.img}}">
+                    <span> {{baseMap.name}} </span>
+                </button>
+            </mat-menu>
             <a href="#" mat-button>
                 <mat-icon>filter_list</mat-icon>
                 Filters
@@ -19,6 +25,7 @@
                 <mat-icon>exit_to_app</mat-icon>
                 Log out
             </a>
+            
         </div>
         </mat-toolbar-row>
     </mat-toolbar>
@@ -26,10 +33,18 @@
     <mat-sidenav-container fxFlexFill>
         <mat-sidenav #sidenav>
         <mat-nav-list>
-            <a href="#" mat-list-item>
+            <a (click)="menuTrigger.openMenu()" mat-list-item>
                 <mat-icon>list</mat-icon>
                 Map Type
+                <div #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="mapsMobile"></div>
             </a>
+            <mat-menu #mapsMobile="matMenu">
+                <button *ngFor="let baseMap of baseMapTypes" mat-menu-item (click)="changeBaseMapType(baseMap.name)">
+                    <img src="{{baseMap.img}}">
+                    {{baseMap.name}}
+                </button>
+            </mat-menu>
+            
             <a href="#" mat-list-item>
                 <mat-icon>filter_list</mat-icon>
                 Filters
@@ -51,7 +66,6 @@
             [zoom]="mapZoomLevel"
         >
         </app-map>
-        <router-outlet></router-outlet>
         </mat-sidenav-content>
     </mat-sidenav-container>
 </div>
