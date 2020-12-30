@@ -37,9 +37,17 @@ export class NavigationComponent implements OnInit {
 
   public setAllFilters: boolean = false;
   filters: {'completed': boolean, 'name': string}[] = [
-    {'completed': false, 'name': 'Park'},
-    {'completed': false, 'name': 'Park3'},
-    {'completed': false, 'name': 'Park4'},
+    {'completed': false, 'name': 'Address'},
+    {'completed': false, 'name': 'Postal'},
+    {'completed': false, 'name': 'Coordinate System'},
+    {'completed': false, 'name': 'Populated Place'},
+    {'completed': false, 'name': 'POI'},
+    {'completed': false, 'name': 'Food'},
+    {'completed': false, 'name': 'Nightlife Spot'},
+    {'completed': false, 'name': 'Parks and Outdoors'},
+    {'completed': false, 'name': 'Shops and Service'},
+    {'completed': false, 'name': 'Travel and Transport'},
+    
   ]
   selectedFilters: string[] = []
   sentFilters: string[] = []

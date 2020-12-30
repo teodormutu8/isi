@@ -34,9 +34,20 @@ export class MapComponent implements OnInit, OnChanges {
   private _basemap = "imagery";
   private _loaded = false;
   private _view: esri.MapView = null;
+  private _places = [];
+
+  private EsriMap; 
+  private EsriMapView;
+  private EsriLocator;
+  private EsriGraphic;
 
   get mapLoaded(): boolean {
     return this._loaded;
+  }
+
+  @Input()
+  set places(places: string[]) {
+    this._places = places;
   }
 
   @Input()
@@ -68,12 +79,50 @@ export class MapComponent implements OnInit, OnChanges {
 
   constructor() {}
 
+  findPlaces(pt, view, Graphic) {
+    var locator = new this.EsriLocator({
+      url: "http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer"
+    });
+
+    locator.addressToLocations({
+      location: pt,
+      categories: this._places,
+      maxLocations: 50,
+      outFields: ["Place_addr", "PlaceName"]
+    }).then(function(results) {
+      view.popup.close();
+      view.graphics.removeAll();
+      results.forEach(function(result){
+        view.graphics.add(
+          new Graphic({
+            attributes: result.attributes,
+            geometry: result.location,
+            symbol: {
+             type: "simple-marker",
+             color: "#000000",
+             size: "12px",
+             outline: {
+               color: "#ffffff",
+               width: "2px"
+             }
+            },
+            popupTemplate: {
+              title: "{PlaceName}",
+              content: "{Place_addr}"
+            }
+         }));
+      });
+    });
+  }
+
   async initializeMap() {
     try {
       // Load the modules for the ArcGIS API for JavaScript
-      const [EsriMap, EsriMapView] = await loadModules([
+      [this.EsriMap, this.EsriMapView, this.EsriLocator, this.EsriGraphic] = await loadModules([
         "esri/Map",
-        "esri/views/MapView"
+        "esri/views/MapView",
+        "esri/tasks/Locator",
+        "esri/Graphic"
       ]);
 
       // Configure the Map
@@ -81,7 +130,7 @@ export class MapComponent implements OnInit, OnChanges {
         basemap: this._basemap
       };
 
-      const map: esri.Map = new EsriMap(mapProperties);
+      const map: esri.Map = new this.EsriMap(mapProperties);
 
       // Initialize the MapView
       const mapViewProperties: esri.MapViewProperties = {
@@ -91,7 +140,10 @@ export class MapComponent implements OnInit, OnChanges {
         map: map
       };
 
-      this._view = new EsriMapView(mapViewProperties);
+      this._view = new this.EsriMapView(mapViewProperties);
+      
+      this.findPlaces(this._view.center, this._view, this.EsriGraphic)
+
       await this._view.when();
       return this._view;
     } catch (error) {
@@ -101,7 +153,7 @@ export class MapComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     // Initialize MapView and return an instance of MapView
-    this.initializeMap().then(() => {});
+    this.initializeMap().then();
   }
 
   ngOnChanges() {
@@ -113,5 +165,10 @@ export class MapComponent implements OnInit, OnChanges {
       // destroy the map view
       this._view.container = null;
     }
+  }
+
+  updatePlaces(event) {
+    var point = this._view.toMap(event)
+    this.findPlaces(point, this._view, this.EsriGraphic)
   }
 }
