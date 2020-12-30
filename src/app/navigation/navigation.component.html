@@ -17,10 +17,32 @@
                     <span> {{baseMap.name}} </span>
                 </button>
             </mat-menu>
-            <a href="#" mat-button>
+            <a mat-button [matMenuTriggerFor]="filter">
                 <mat-icon>filter_list</mat-icon>
                 Filters
             </a>
+            <mat-menu #filter="matMenu">
+                <mat-checkbox class="mat-menu-item" (click)="$event.stopPropagation();"
+                    [labelPosition]="'after'"
+                    [checked]="setAllFilters"
+                    [indeterminate]="someSet()"
+                    (change)="setAll()">
+                Set all
+                </mat-checkbox>
+                <ul>
+                    <li *ngFor="let filter of filters">
+                        <mat-checkbox class="mat-menu-item"
+                            [checked]="filter.completed" 
+                            (click)="$event.stopPropagation();"
+                            (change)="updateFilters(filter)">
+                            {{filter.name}}
+                        </mat-checkbox>
+                    </li>
+                  </ul>
+                  <button mat-menu-item (click)="applyFilters()">
+                    Apply filters
+                </button>
+            </mat-menu>
             <a (click)="auth.logout()" mat-button>
                 <mat-icon>exit_to_app</mat-icon>
                 Log out
@@ -45,10 +67,33 @@
                 </button>
             </mat-menu>
             
-            <a href="#" mat-list-item>
+            <a (click)="menuTriggerFilterMobile.openMenu()" mat-list-item>
                 <mat-icon>filter_list</mat-icon>
                 Filters
+                <div #menuTriggerFilterMobile="matMenuTrigger" [matMenuTriggerFor]="filtersMobile"></div>
             </a>
+            <mat-menu #filtersMobile="matMenu">
+                <mat-checkbox class="mat-menu-item" (click)="$event.stopPropagation();"
+                    [labelPosition]="'after'"
+                    [checked]="setAllFilters"
+                    [indeterminate]="someSet()"
+                    (change)="setAll()">
+                Set all
+                </mat-checkbox>
+                <ul>
+                    <li *ngFor="let filter of filters">
+                        <mat-checkbox class="mat-menu-item"
+                            [checked]="filter.completed" 
+                            (click)="$event.stopPropagation();"
+                            (change)="updateFilters(filter)">
+                            {{filter.name}}
+                        </mat-checkbox>
+                    </li>
+                  </ul>
+                  <button mat-menu-item (click)="applyFilters()">
+                    Apply filters
+                </button>
+            </mat-menu>
             <a (click)="auth.logout()" mat-list-item>
                 <mat-icon>exit_to_app</mat-icon>
                 Log out

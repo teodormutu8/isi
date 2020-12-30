@@ -14,3 +14,8 @@ img {
     width: 25%;
     height: auto;
 }
+
+ul {
+    list-style-type: none;
+    margin-top: 4px;
+}

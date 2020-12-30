@@ -15,7 +15,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { AuthHttpInterceptor, AuthModule } from '@auth0/auth0-angular';
 import { LoginComponent } from './login/login.component';
 import { NavigationComponent } from './navigation/navigation.component';
-import {MatMenuModule} from '@angular/material/menu';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatCheckboxModule } from '@angular/material/checkbox'
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 @NgModule({
@@ -37,6 +38,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
     MatSidenavModule,
     MatToolbarModule,
     MatMenuModule,
+    MatCheckboxModule,
     AuthModule.forRoot({
       domain: 'dev-mn3zfs0x.eu.auth0.com',
       clientId: 'WfoVFpYqvxmjb4JJDs1RodgpojP8RC7e',

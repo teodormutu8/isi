@@ -33,8 +33,16 @@ export class NavigationComponent implements OnInit {
     {'img': 'https://developers.arcgis.com/javascript/assets/img/apiref/basemap/streets-navigation.jpg', 'name': 'Streets Navigation Vector'},
     {'img': 'https://developers.arcgis.com/javascript/assets/img/apiref/basemap/topo.jpg', 'name': 'Topo Vector'},
     {'img': 'https://developers.arcgis.com/javascript/assets/img/apiref/basemap/streets-relief.jpg', 'name': 'Streets Relief Vector'},
-
   ]
+
+  public setAllFilters: boolean = false;
+  filters: {'completed': boolean, 'name': string}[] = [
+    {'completed': false, 'name': 'Park'},
+    {'completed': false, 'name': 'Park3'},
+    {'completed': false, 'name': 'Park4'},
+  ]
+  selectedFilters: string[] = []
+  sentFilters: string[] = []
 
   constructor(@Inject(DOCUMENT) public document: Document, public auth: AuthService) { }
 
@@ -44,6 +52,38 @@ export class NavigationComponent implements OnInit {
   changeBaseMapType(basemapType: string) {
     var filteredBaseMap = basemapType.toLowerCase().replace(/ /g, '-');
     this.basemapType = filteredBaseMap;
+  }
+
+  setAll() {
+    this.setAllFilters = !this.setAllFilters;
+    this.filters.forEach(t => t.completed = this.setAllFilters);
+    if (this.setAllFilters)
+      this.filters.filter(t => { this.selectedFilters.push(t.name) })
+    else
+      this.selectedFilters = []
+  }
+
+  updateFilters(filter) {
+    if (!filter.completed)
+      this.setAllFilters = false;
+  
+    var idx = this.filters.findIndex(t => t.name === filter.name);
+    this.filters[idx].completed = !this.filters[idx].completed;
+    
+    if (this.filters[idx].completed)
+      this.selectedFilters.push(filter.name);
+    else
+      this.selectedFilters = this.selectedFilters.filter(t => t != filter.name);
+    
+    this.setAllFilters = this.filters.every(t => t.completed);
+  }
+
+  someSet(): boolean {
+    return this.filters.filter(t => t.completed).length > 0 && !this.setAllFilters;
+  }
+
+  applyFilters() {
+    this.sentFilters = this.selectedFilters
   }
 
 }
