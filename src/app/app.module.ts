@@ -40,8 +40,8 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
     MatMenuModule,
     MatCheckboxModule,
     AuthModule.forRoot({
-      domain: 'dev-mn3zfs0x.eu.auth0.com',
-      clientId: 'WfoVFpYqvxmjb4JJDs1RodgpojP8RC7e',
+      domain: 'YOUR_DOMAIN',
+      clientId: 'YOUR_CLIENT_ID',
       redirectUri: window.location.origin
     }),
 
