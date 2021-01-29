@@ -88,10 +88,10 @@ export class MapComponent implements OnInit, OnChanges {
       location: pt,
       categories: this._places,
       maxLocations: 50,
-      outFields: ["Place_addr", "PlaceName"]
+      outFields: ["Place_addr", "PlaceName", "Type", "Phone", "URL"]
     }).then(function(results) {
-      view.popup.close();
-      view.graphics.removeAll();
+      //view.popup.close();
+      //view.graphics.removeAll();
       results.forEach(function(result){
         view.graphics.add(
           new Graphic({
@@ -108,7 +108,33 @@ export class MapComponent implements OnInit, OnChanges {
             },
             popupTemplate: {
               title: "{PlaceName}",
-              content: "{Place_addr}"
+              content: [
+				{
+					type: "fields",
+					fieldInfos: [
+						{
+							fieldName: "Place_addr",
+							label:"Address",
+							visible: true
+						},
+						{
+							fieldName: "Type",
+							label:"Type",
+							visible: true
+						},
+						{
+							fieldName:"Phone",
+							label:"Phone",
+							visible: true
+						},
+						{
+							fieldName: "URL",
+							label: "URL",
+							visible: true
+						}
+					]
+				}
+			  ]
             }
          }));
       });
